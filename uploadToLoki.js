@@ -23,58 +23,8 @@ const lokiSession = axios.create({
   },
 });
 
-const pageDataObject = {
-  urn: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}`,
-  names: [loki.pageName],
-  name: loki.pageName,
-  summary: '',
-  description: null,
-  descriptionHtml: null,
-  serviceOutput: {
-    outputContentTypeUrn: 'urn:com:loki:meta:data:mediaTypes:text%2Fhtml',
-    oldContentType: 'urn:com:loki:meta:data:mediaTypes:text%2Fhtml',
-    maxAge: '0',
-  },
-  operationImpls: [
-    {
-      operation: 'urn:com:loki:core:model:operations:webService',
-      method:
-                'urn:com:loki:core:model:operations:webService:methods:freemarkerPage',
-      pageTemplate: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
-      securityFunctionGroups: [],
-      actionImpls: [
-        {
-          action: 'urn:com:loki:core:model:actions:get',
-          securityFunctionGroups: [
-            `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:model:functions:generalAccess`,
-          ],
-        },
-      ],
-    },
-    {
-      operation: 'urn:com:loki:core:model:operations:render',
-      method: 'urn:com:loki:freemarker:model:methods:freemarkerRender',
-      pageTemplate: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
-      securityFunctionGroups: [],
-      actionImpls: [],
-    },
-  ],
-  purposeUrns: ['urn:com:loki:core:data:servicePurposeSet#page'],
-  boundToEntityTypeUrn: null,
-  entityTypeUrns: [
-    'urn:com:loki:meta:model:types:webPage',
-    'urn:com:loki:meta:model:types:service',
-  ],
-  combinedItemUrns: [],
-  inactive: false,
-  lastEditByUrn: process.env.LOKI_USER_URN,
-  lastEditDate: new Date().toISOString(),
-  pages: [
-    {
-      urn: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
-    },
-  ],
-};
+// eslint-disable-next-line no-use-before-define
+const pageDataObject = makePageDataObject(packageJson);
 
 const pushToLoki = async () => {
   const distFiles = fs.readdirSync('./dist');
@@ -144,5 +94,66 @@ const deployApp = async () => {
   await clearFiles();
   pushToLoki();
 };
-
+/**
+ * @param {import('./package.json')} p The "package.json" file for the application
+ */
+function makePageDataObject(p) {
+  const {
+    appInfo: { loki },
+  } = p;
+  return {
+    urn: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}`,
+    names: [loki.pageName],
+    name: loki.pageName,
+    summary: "",
+    description: null,
+    descriptionHtml: null,
+    serviceOutput: {
+      outputContentTypeUrn:
+                "urn:com:loki:meta:data:mediaTypes:text%2Fhtml",
+      oldContentType: "urn:com:loki:meta:data:mediaTypes:text%2Fhtml",
+      maxAge: "0",
+    },
+    operationImpls: [
+      {
+        operation: "urn:com:loki:core:model:operations:webService",
+        method:
+                    "urn:com:loki:core:model:operations:webService:methods:freemarkerPage",
+        pageTemplate: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
+        securityFunctionGroups: [],
+        actionImpls: [
+          {
+            action: "urn:com:loki:core:model:actions:get",
+            securityFunctionGroups: [
+              `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:model:functions:generalAccess`,
+            ],
+          },
+        ],
+      },
+      {
+        operation: "urn:com:loki:core:model:operations:render",
+        method:
+                    "urn:com:loki:freemarker:model:methods:freemarkerRender",
+        pageTemplate: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
+        securityFunctionGroups: [],
+        actionImpls: [],
+      },
+    ],
+    purposeUrns: ["urn:com:loki:core:data:servicePurposeSet#page"],
+    boundToEntityTypeUrn: null,
+    entityTypeUrns: [
+      "urn:com:loki:meta:model:types:webPage",
+      "urn:com:loki:meta:model:types:service",
+    ],
+    combinedItemUrns: [],
+    inactive: false,
+    lastEditByUrn: process.env.LOKI_USER_URN,
+    lastEditDate: new Date().toISOString(),
+    pages: [
+      {
+        urn: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
+      },
+    ],
+  };
+}
 deployApp();
