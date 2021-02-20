@@ -23,7 +23,7 @@ This starter has already been initialized with the following options and package
 :white_check_mark: Unit testing with Jest<br>
 </p>
 <br>
-⚙️ Because setups for Vue Router and Vuex will vary from project to project, these packages are included but not configured. You will need to determine your own state management and routing needs and configure those tools accordingly.
+⚙️ Because setups for Vue Router and Vuex will vary from project to project, these packages are included but not configured. You will need to determine your own routing and state management needs and configure those tools accordingly.
 
 ### Compiles and hot-reloads for development
 ```
