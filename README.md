@@ -4,7 +4,7 @@ Loki Vue 3 + Vite Starter is a simple way to fast-forward through the setup of a
 
 ## Installation
 
-Use the "Use the template" button to create a new repository using the starter.
+Click the "Use the template" button at the top of the repository's GitHub page to create a new repository using the starter.
 
 After your new repository has been cloned, run
 ```node
