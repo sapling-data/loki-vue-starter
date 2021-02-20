@@ -42,9 +42,7 @@ npm run test:unit
 ```
 If you would like to add E2E tests, it is recommended that you add a <code>test:e2e</code> script command that will run with a <code>jest.e2e.config.js</code> file. Since component tests are common in Vue development, the <code>test:unit</code> command is included by default.
 ### Lints and fixes files
-```
-npm run lint
-```
+Linting is currently working in VS Code. Your file will be linted and fixed on save. See the [ESLint docs](https://eslint.org/) to learn how to configure lint for your particular needs.
 
 ### Deploying to Loki
 The production build of your application, located in the <code>dist</code> directory by default, can be manually deployed to a page in a Loki OS application by running <code>npm run loki</code> from the command line. In order to properly deploy your code, update the following information in <code>package.json</code>:
