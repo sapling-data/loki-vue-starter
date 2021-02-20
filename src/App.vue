@@ -15,10 +15,13 @@
 </template>
 
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+// eslint-disable-next-line no-unused-vars
+import HelloWorld from './components/HelloWorld.vue';
 
-const tailwindCheck = () => { 
-  alert('Yay Tailwind!')
+// eslint-disable-next-line no-unused-vars
+const tailwindCheck = () => {
+  // eslint-disable-next-line no-alert
+  alert('Yay Tailwind!');
 };
 </script>
 

@@ -4,7 +4,6 @@ require('dotenv').config();
 
 const axios = require('axios').default;
 const fs = require('fs');
-const path = require('path');
 const packageJson = require('./package.json');
 
 const baseUrl = `https://${packageJson.appInfo.loki.cloudPrefix}.saplingdata.com/${packageJson.appInfo.loki.appName}-AppBuilder/api`;
@@ -58,6 +57,7 @@ function getCurrentFiles() {
 async function deleteCurrentFiles(files) {
   console.log(`\x1b[34mDeleting ${files.length} files from the page...\x1b[89m`);
 
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < files.length; i++) {
     const deleteUrl = `${resourceUrl}/${files[i].urn.replace(/[:]/g, '/')}`;
     // eslint-disable-next-line no-await-in-loop
