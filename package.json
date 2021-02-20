@@ -1,6 +1,6 @@
 {
   "name": "loki-vite-starter",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "appInfo": {
     "loki": {
@@ -14,7 +14,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "jest --config=jest.unit.config.js",
+    "test:unit": "jest --config=jest.unit.config.js",
     "loki": "node uploadToLoki.js"
   },
   "dependencies": {
@@ -34,7 +34,12 @@
     "autoprefixer": "^10.2.4",
     "axios": "^0.21.1",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-vue": "^7.6.0",
     "jest": "^26.6.3",
     "postcss": "^8.2.6",
     "tailwindcss": "^2.0.3",
