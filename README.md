@@ -14,7 +14,7 @@ to install the necessary packages.
 
 ## Usage
 <p>
-This starter has already been initialized with the following options and packages:<br>
+This starter has already been initialized with the following packages and tools:<br>
 :white_check_mark: Vue 3<br>
 :white_check_mark: Babel<br>
 :white_check_mark: Vue Router (included but not configured)<br>
