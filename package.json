@@ -4,10 +4,11 @@
   "description": "",
   "appInfo": {
     "loki": {
-      "appName": "The Loki app that you plan to deploy to",
-      "pageName": "The page in Loki's App Builder that you plan to deploy to",
+      "appCodeName": "The URN segment identifying the Loki app that you plan to deploy to (the last segment of loki.app.rootUrn)",
+      "pageCodeName": "The page in Loki's App Builder that you plan to deploy to",
       "cloudPrefix": "The subdomain of your cloud's url",
-      "cloudName": "The name of your cloud environment"
+      "cloudCodeName": "The name of your cloud environment",
+      "pageName": "The name of the page (the page title)"
     }
   },
   "scripts": {
