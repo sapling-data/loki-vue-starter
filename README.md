@@ -17,8 +17,8 @@ to install the necessary packages.
 This starter has already been initialized with the following options and packages:<br>
 :white_check_mark: Vue 3<br>
 :white_check_mark: Babel<br>
-:white_check_mark: Vue Router (installed but not configured ⚙️)<br>
-:white_check_mark: Vuex (installed but not configured ⚙️)<br>
+:white_check_mark: Vue Router (installed but not configured ⚙️ )<br>
+:white_check_mark: Vuex (installed but not configured ⚙️ )<br>
 :white_check_mark: Linting on save using ESLint and the Airbnb style guide<br>
 :white_check_mark: Unit testing with Jest<br>
 </p>
