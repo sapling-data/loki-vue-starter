@@ -2,8 +2,12 @@
 /* eslint-disable no-console, no-loop-func */
 require('dotenv').config();
 
+/** @typedef {import('./package.json')} PackageJson */
+
 const axios = require('axios').default;
 const fs = require('fs');
+
+/** @type {PackageJson} */
 const packageJson = require('./package.json');
 
 const {
@@ -23,10 +27,9 @@ const lokiSession = axios.create({
   },
 });
 
-// eslint-disable-next-line no-use-before-define
-const pageDataObject = makePageDataObject(packageJson);
 
 const pushToLoki = async () => {
+  const pageDataObject = pageData(loki);
   const distFiles = fs.readdirSync('./dist');
 
   await lokiSession.post(pageDataUploadUrl, pageDataObject).then(() => {
@@ -94,17 +97,16 @@ const deployApp = async () => {
   await clearFiles();
   pushToLoki();
 };
+
 /**
- * @param {import('./package.json')} p The "package.json" file for the application
+ * @param {PackageJson['appInfo']['loki']} l The appInfo.loki attribute of package.json for the application
+ * @returns {import('./types').PageDataObject} A data object defining the page to save in AppBuilder
  */
-function makePageDataObject(p) {
-  const {
-    appInfo: { loki },
-  } = p;
+function pageData(l) {
   return {
-    urn: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}`,
-    names: [loki.pageName],
-    name: loki.pageName,
+    urn: `urn:com:${l.cloudPrefix}:${l.appCodeName}:app:pages:${l.pageCodeName}`,
+    names: [l.pageName],
+    name: l.pageName,
     summary: "",
     description: null,
     descriptionHtml: null,
@@ -119,13 +121,13 @@ function makePageDataObject(p) {
         operation: "urn:com:loki:core:model:operations:webService",
         method:
                     "urn:com:loki:core:model:operations:webService:methods:freemarkerPage",
-        pageTemplate: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
+        pageTemplate: `urn:com:${l.cloudPrefix}:${l.appCodeName}:app:pages:${l.pageCodeName}!index.html`,
         securityFunctionGroups: [],
         actionImpls: [
           {
             action: "urn:com:loki:core:model:actions:get",
             securityFunctionGroups: [
-              `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:model:functions:generalAccess`,
+              `urn:com:${l.cloudPrefix}:${l.appCodeName}:model:functions:generalAccess`,
             ],
           },
         ],
@@ -134,7 +136,7 @@ function makePageDataObject(p) {
         operation: "urn:com:loki:core:model:operations:render",
         method:
                     "urn:com:loki:freemarker:model:methods:freemarkerRender",
-        pageTemplate: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
+        pageTemplate: `urn:com:${l.cloudPrefix}:${l.appCodeName}:app:pages:${l.pageCodeName}!index.html`,
         securityFunctionGroups: [],
         actionImpls: [],
       },
@@ -151,7 +153,7 @@ function makePageDataObject(p) {
     lastEditDate: new Date().toISOString(),
     pages: [
       {
-        urn: `urn:com:${loki.cloudPrefix}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!index.html`,
+        urn: `urn:com:${l.cloudPrefix}:${l.appCodeName}:app:pages:${l.pageCodeName}!index.html`,
       },
     ],
   };
