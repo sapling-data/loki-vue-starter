@@ -49,17 +49,18 @@ The production build of your application, located in the <code>dist</code> d
 ```
 "appInfo": {
     "loki": {
-      "appName": [The Loki app that you plan to deploy to],
-      "pageName": [The page in Loki's App Builder that you plan to deploy to],
-      "cloudPrefix": [The subdomain of your cloud's url],
-      "cloudName": [The name of your cloud environment]
+      "appCodeName": "The URN segment identifying the Loki app that you plan to deploy to (the last segment of loki.app.rootUrn)",
+      "pageCodeName": "The page in Loki's App Builder that you plan to deploy to",
+      "cloudPrefix": "The subdomain of your cloud's url",
+      "cloudCodeName": "The name of your cloud environment",
+      "pageName": "The name of the page (the page title)"
     }
   },
 ```
 Please make sure you update this information correctly, since it will be used to construct the API endpoints for deploying your code. It is recommended to set up a page in Loki's App Builder (along with an appropriate security model) for your Vue app to deploy to **before** configuring your Vue app.
 
 #### Environment variables
-Deploying to Loki requires providing access to valid Loki credentials via environment variables. Add a [.env file to your project root and use dotenv](https://github.com/motdotla/dotenv#readme) to accomplish this. Use <code>LOKI_USERNAME</code> and <code>LOKI_PASSWORD</code> as your variable names.
+Deploying to Loki requires providing access to valid Loki credentials via environment variables. Add a [.env file to your project root and use dotenv](https://github.com/motdotla/dotenv#readme) to accomplish this. Use `LOKI_USER_URN`, <code>LOKI_USERNAME</code> and <code>LOKI_PASSWORD</code> as your variable names.
 <br>
 <br>
 :warning: **DO NOT CHECK YOUR <code>.env</code> FILE INTO VERSION CONTROL** :warning:<br>
