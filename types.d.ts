@@ -3,7 +3,13 @@ declare module "*.vue" {
     export default Vue;
 }
 
-export interface PageDataObject {
+interface UserSaveObject {
+    createDate?: string;
+    createByUrn?: string;
+    lastEditByUrn: string;
+    lastEditDate: string;
+}
+export type PageDataObject = UserSaveObject & {
     urn: string;
     names: string[];
     name: string;
@@ -17,17 +23,13 @@ export interface PageDataObject {
     entityTypeUrns: string[];
     combinedItemUrns: string[];
     inactive: boolean;
-    createDate?: string;
-    createByUrn?: string;
-    lastEditByUrn: string;
-    lastEditDate: string;
     deprecated?: Boolean;
     lastEditDateObs?: string;
     lastEditByUrnObs?: string;
     textSet?: string[];
     test?: string;
     pages: Page[];
-}
+} 
 
 export interface OperationImpl {
     operation: string;
@@ -52,22 +54,18 @@ export interface ServiceOutput {
     maxAge: string;
 }
 
-export interface QueryDataObject {
+export type QueryDataObject = UserSaveObject & {
     urn: string;
     name: string;
     summary: string;
     queryString: string;
     securityFunctionUrns: string[];
     boundToEntityTypeUrn?: string;
-    childQueries: ChildQuery[];
+    childQueries?: ChildQuery[];
     inactive: boolean;
-    createDate: string;
-    createByUrn: string;
-    lastEditDate: string;
-    lastEditByUrn: string;
-    queryEngineUrn: string;
-    dataSpaceUrn: string;
-    queryParams: QueryParam[];
+    queryEngineUrn?: string;
+    dataSpaceUrn?: string;
+    queryParams?: QueryParam[];
 }
 
 export interface ChildQuery {
