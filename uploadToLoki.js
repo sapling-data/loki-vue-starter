@@ -1,14 +1,15 @@
 // @ts-check
 /* eslint-disable no-console, no-loop-func, max-len */
-require('dotenv').config();
+require("dotenv").config();
 
-
-const axios = require('axios').default;
-const fs = require('fs');
+const axios = require("axios").default;
+const fs = require("fs");
 
 /**
  * @typedef {import('./package.json')} PackageJson
  * @typedef {import('./types').PageDataObject} PageDataObject
+ * @typedef {import('./types').QueryDataObject} QueryDataObject
+ * @typedef {import('./types').ChildQuery} ChildQuery
  *
  * */
 
@@ -22,13 +23,13 @@ const fs = require('fs');
  * @property {PackageJson['appInfo']['loki']['cloudCodeName']} appInfo.loki.cloudCodeName - The name of your cloud environment
  * @property {PackageJson['appInfo']['loki']['pageName']} appInfo.loki.pageName - The name of the page (the page title)
  * */
-const packageJson = require('./package.json');
+const packageJson = require("./package.json");
 
 const {
   appInfo: { loki },
 } = packageJson;
 const baseUrl = `https://${loki.cloudPrefix}.saplingdata.com/${loki.appCodeName}-AppBuilder/api`;
-const resourceUrl = '/urn/com/loki/core/model/api/resource/v';
+const resourceUrl = "/urn/com/loki/core/model/api/resource/v";
 const pageFileListUrl = `/urn/com/loki/core/model/api/list/v/urn/com/${loki.cloudCodeName}/${loki.appCodeName}/app/pages/${loki.pageCodeName}?format=json`;
 const pageFileUploadUrl = `/urn/com/loki/core/model/api/resource/v/urn/com/${loki.cloudCodeName}/${loki.appCodeName}/app/pages/${loki.pageCodeName}!`;
 const pageDataUploadUrl = `/urn/com/loki/modeler/model/types/combinedPageExt/v/urn/com/${loki.cloudPrefix}/${loki.appCodeName}/app/pages/${loki.pageCodeName}`;
@@ -43,7 +44,7 @@ const lokiSession = axios.create({
 
 const pushToLoki = async () => {
   const pageDataObject = pageData(loki);
-  const distFiles = fs.readdirSync('./dist');
+  const distFiles = fs.readdirSync("./dist");
 
   await lokiSession.post(pageDataUploadUrl, pageDataObject).then(() => {
     console.log(
@@ -53,14 +54,14 @@ const pushToLoki = async () => {
   distFiles.forEach((file) => {
     const filePath = `./dist/${file}`;
 
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(filePath, "utf8", (err, data) => {
       const baseFileName = file;
       // const baseFileName = file.replace(`${loki.pageCodeName}!`, '');
       const uploadUrl = pageFileUploadUrl + baseFileName;
       lokiSession
         .post(uploadUrl, data, {
           headers: {
-            'Content-Type': 'text/plain',
+            "Content-Type": "text/plain",
           },
         })
         .then(() => {
@@ -86,7 +87,7 @@ async function deleteCurrentFiles(files) {
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < files.length; i++) {
-    const deleteUrl = `${resourceUrl}/${files[i].urn.replace(/[:]/g, '/')}`;
+    const deleteUrl = `${resourceUrl}/${files[i].urn.replace(/[:]/g, "/")}`;
     // eslint-disable-next-line no-await-in-loop
     await lokiSession
       .delete(deleteUrl)
@@ -103,7 +104,7 @@ async function deleteCurrentFiles(files) {
 async function clearFiles() {
   const currentFiles = await getCurrentFiles();
   await deleteCurrentFiles(currentFiles);
-  console.log('Finished clearing previous build!');
+  console.log("Finished clearing previous build!");
 }
 
 const deployApp = async () => {
@@ -171,4 +172,57 @@ function pageData(l) {
     ],
   };
 }
+/**
+ * @param {PackageJson['appInfo']['loki']} l The appInfo.loki attribute of package.json for the application
+ * @returns {QueryDataObject} A data object defining the query to save in AppBuilder
+ */
+function queryData(l) {
+  const queryUrn = `urn:com:${l.cloudPrefix}:${l.appCodeName}:model:queries:${l.pageCodeName}`;
+  return {
+    urn: queryUrn,
+    name: `${l.pageName} Queries`,
+    summary: `Queries necessary to run page ${l.pageName} at urn:com:${l.cloudPrefix}:${l.appCodeName}:app:pages:${l.pageCodeName}`,
+    queryString: "",
+    securityFunctionUrns: [
+      "urn:com:reedsmith:delorean:model:functions:generalAccess",
+    ],
+    boundToEntityTypeUrn: null,
+    childQueries: [
+      {
+        urn: `${queryUrn}#child`,
+        queryString: "",
+        dataSpaceUrn:
+                    "urn:com:reedsmith:delorean:model:dataSpaces:analytics-sql",
+        queryParams: [
+          {
+            codeName: "stringParam",
+            valueTypeUrn: "urn:com:loki:core:model:types:string",
+          },
+          {
+            codeName: "booleanParam",
+            valueTypeUrn: "urn:com:loki:core:model:types:bool",
+          },
+          {
+            codeName: "integerParam",
+            valueTypeUrn: "urn:com:loki:core:model:types:integer",
+          },
+          {
+            codeName: "dateParam",
+            valueTypeUrn: "urn:com:loki:core:model:types:date",
+          },
+        ],
+      },
+    ],
+    inactive: false,
+    createDate: "2020-11-29T18:53:19.267Z",
+    createByUrn: "urn:com:reedsmith:domain:security:users:richardSayles",
+    lastEditDate: "2021-02-21T12:33:32.468Z",
+    lastEditByUrn: "urn:com:reedsmith:domain:security:users:benKoplin",
+    queryEngineUrn: null,
+    dataSpaceUrn:
+            "urn:com:reedsmith:delorean:model:dataSpaces:analytics-sql",
+    queryParams: [],
+  };
+}
+
 deployApp();
