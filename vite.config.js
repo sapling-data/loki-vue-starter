@@ -4,22 +4,25 @@ import { defineConfig } from "vite";
 
 import { fixLokiRefs } from "./fixLokiRefs";
 
-const { resolve } = require('path');
+const { resolve } = require("path");
 
 /**
  * @type {import('vite').UserConfig}
  */
 const viteConfig = {
-  root: './',
-  plugins: [fixLokiRefs(), vue()],
-  build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-      },
+    root: "./",
+    plugins:
+        process.env.APP_ENV === "development"
+            ? [vue()]
+            : [fixLokiRefs(), vue()],
+    build: {
+        rollupOptions: {
+            input: {
+                main: resolve(__dirname, "index.html"),
+            },
+        },
+        outDir: "dist",
+        assetsDir: "./",
     },
-    outDir: 'dist',
-    assetsDir: './',
-  },
 };
 export default defineConfig(viteConfig);

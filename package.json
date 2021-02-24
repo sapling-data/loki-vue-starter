@@ -12,9 +12,9 @@
     }
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "APP_ENV=development vite",
     "build": "vite build",
-    "serve": "vite preview",
+    "serve": "APP_ENV=development vite preview",
     "test:unit": "jest --config=jest.unit.config.js",
     "loki": "node uploadToLoki.js"
   },
