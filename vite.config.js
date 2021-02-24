@@ -10,19 +10,19 @@ const { resolve } = require("path");
  * @type {import('vite').UserConfig}
  */
 const viteConfig = {
-    root: "./",
-    plugins:
+  root: "./",
+  plugins:
         process.env.APP_ENV === "development"
-            ? [vue()]
-            : [fixLokiRefs(), vue()],
-    build: {
-        rollupOptions: {
-            input: {
-                main: resolve(__dirname, "index.html"),
-            },
-        },
-        outDir: "dist",
-        assetsDir: "./",
+          ? [vue()]
+          : [fixLokiRefs(), vue()],
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, "index.html"),
+      },
     },
+    outDir: "dist",
+    assetsDir: "./",
+  },
 };
 export default defineConfig(viteConfig);
