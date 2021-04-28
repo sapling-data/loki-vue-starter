@@ -1,40 +1,40 @@
-// @ts-check
-/* eslint-disable max-len */
-const {
-  appInfo: { loki },
-} = require("./package.json");
+const { appInfo: { loki } } = require('./package.json');
 
+const resourceRootUrn = `urn:com:${loki.cloudCodeName}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!`;
 /**
- * @param {string} h The compiled index.html HTML string, with reference to the bundled resources f in script and link taks
- * @param {string} f A bundle file name to replace with "${loki.web.resourceUrl('[f]')}""
- * @returns {string} the html string with paths in ref and src attributes replaced with loki.web.resourceUrl() functions
+ * @param {string} htmlstring An HTML string
+ * @param {string} filename A bundle file name to replace with "${loki.web.resourceUrl('[b]')}""
  */
-function renameResources(h, f) {
-  const urn = `urn:com:${loki.cloudCodeName}:${loki.appCodeName}:app:pages:${loki.pageCodeName}!`;
-  const regexp = new RegExp(`(=")(?:)[^=]*(?:)(${f})(?:)[^=]*(")`, "g");
-  return h.replace(regexp, `$1\${loki.web.resourceUrl('${urn}$2')}$3`);
+function replacePathWithLokiResource(htmlstring, filename) {
+  const regexp = new RegExp(
+    `(=")(?:)[^=]*(?:)(${filename})(?:)[^=]*(")`,
+    'g',
+  );
+  return htmlstring.replace(
+    regexp,
+    `$1\${loki.web.resourceUrl('${resourceRootUrn}$2')}$3`,
+  );
 }
-
-/**
- * @returns {import('vite').Plugin} A Vite plugin to replace paths ref and src attributes in the compiled html with loki.web.resourceUrl() functions
- */
-function fixLokiRefs() {
+const htmlPlugin = () => {
   /** @type {import('vite').Plugin} */
   const def = {
-    name: "html-transform",
-    enforce: "post",
+    name: 'html-transform',
+    enforce: 'post',
     transformIndexHtml(html, ctx) {
       const bundleNames = Object.keys(ctx.bundle);
-      bundleNames.push("favicon.ico");
+      bundleNames.push('favicon.ico');
       // eslint-disable-next-line no-use-before-define
-      const n = bundleNames.reduce((r, b) => renameResources(r, b), html);
+      const newHtml = bundleNames.reduce(
+        (r, b) => replacePathWithLokiResource(r, b),
+        html,
+      );
       // @ts-ignore
       // eslint-disable-next-line no-use-before-define
-      return n;
+      return newHtml;
     },
   };
   return def;
-}
+};
 
 // eslint-disable-next-line import/prefer-default-export
-export { fixLokiRefs };
+export { htmlPlugin }
