@@ -2,7 +2,7 @@
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 
-import { fixLokiRefs } from "./fixLokiRefs";
+import { htmlPlugin } from "./htmlPlugin";
 
 const { resolve } = require('path');
 
@@ -11,7 +11,7 @@ const { resolve } = require('path');
  */
 const viteConfig = {
   root: './',
-  plugins: [fixLokiRefs(), vue()],
+  plugins: [htmlPlugin(), vue()],
   build: {
     rollupOptions: {
       input: {
