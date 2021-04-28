@@ -5,14 +5,10 @@
   "appInfo": {
     "loki": {
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of b3a32d2 (Create Vite Plugin to appropriately reference Loki resource files)
       "appName": "The Loki app that you plan to deploy to",
       "pageName": "The page in Loki's App Builder that you plan to deploy to",
       "cloudPrefix": "The subdomain of your cloud's url",
       "cloudName": "The name of your cloud environment"
-<<<<<<< HEAD
 =======
       "appCodeName": "delorean",
       "pageCodeName": "myFancyVueApp",
@@ -20,8 +16,6 @@
       "cloudCodeName": "reedsmith",
       "pageName": "My Fancy Vue App"
 >>>>>>> parent of 5e31c20 (revert to original package.json for app parameters)
-=======
->>>>>>> parent of b3a32d2 (Create Vite Plugin to appropriately reference Loki resource files)
     }
   },
   "scripts": {
