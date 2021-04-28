@@ -1,17 +1,14 @@
-// @ts-check
-import vue from "@vitejs/plugin-vue";
-import { defineConfig } from "vite";
-
-import { fixLokiRefs } from "./fixLokiRefs";
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
 const { resolve } = require('path');
 
-/**
- * @type {import('vite').UserConfig}
- */
-const viteConfig = {
+const packageJson = require('./package.json');
+
+export default defineConfig({
   root: './',
-  plugins: [fixLokiRefs(), vue()],
+  base: process.env.NODE_ENV === 'production' ? `/${packageJson.appInfo.loki.appName}/api/urn/com/loki/core/model/api/modelResource/v/urn/com/${packageJson.appInfo.loki.cloudName}/${packageJson.appInfo.loki.appName}/app/pages/${packageJson.appInfo.loki.pageName}/` : '/',
+  plugins: [vue()],
   build: {
     rollupOptions: {
       input: {
@@ -21,5 +18,4 @@ const viteConfig = {
     outDir: 'dist',
     assetsDir: './',
   },
-};
-export default defineConfig(viteConfig);
+});
