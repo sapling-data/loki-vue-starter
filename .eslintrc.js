@@ -15,6 +15,5 @@ module.exports = {
     'vue',
   ],
   rules: {
-    quotes: [0, 'backtick'],
   },
 };
