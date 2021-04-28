@@ -1,27 +1,13 @@
 // @ts-check
-/* eslint-disable no-console, no-loop-func, max-len */
+/* eslint-disable no-console, no-loop-func */
 require('dotenv').config();
 
+/** @typedef {import('./package.json')} PackageJson */
 
 const axios = require('axios').default;
 const fs = require('fs');
 
-/**
- * @typedef {import('./package.json')} PackageJson
- * @typedef {import('./types').PageDataObject} PageDataObject
- *
- * */
-
-/**
- * @type {PackageJson}
- * @property {PackageJson['appInfo']} appInfo - The application definition object
- * @property {PackageJson['appInfo']['loki']} appInfo.loki - The Loki portion of the application definition
- * @property {PackageJson['appInfo']['loki']['appCodeName']} appInfo.loki.appCodeName - The URN segment identifying the Loki app that you plan to deploy to (the last segment of loki.app.rootUrn)
- * @property {PackageJson['appInfo']['loki']['pageCodeName']} appInfo.loki.pageCodeName - The page in Loki's App Builder that you plan to deploy to
- * @property {PackageJson['appInfo']['loki']['cloudPrefix']} appInfo.loki.cloudPrefix - The subdomain of your cloud's url
- * @property {PackageJson['appInfo']['loki']['cloudCodeName']} appInfo.loki.cloudCodeName - The name of your cloud environment
- * @property {PackageJson['appInfo']['loki']['pageName']} appInfo.loki.pageName - The name of the page (the page title)
- * */
+/** @type {PackageJson} */
 const packageJson = require('./package.json');
 
 const {
@@ -40,6 +26,7 @@ const lokiSession = axios.create({
     password: process.env.LOKI_PASSWORD,
   },
 });
+
 
 const pushToLoki = async () => {
   const pageDataObject = pageData(loki);
@@ -113,7 +100,7 @@ const deployApp = async () => {
 
 /**
  * @param {PackageJson['appInfo']['loki']} l The appInfo.loki attribute of package.json for the application
- * @returns {PageDataObject} A data object defining the page to save in AppBuilder
+ * @returns {import('./types').PageDataObject} A data object defining the page to save in AppBuilder
  */
 function pageData(l) {
   return {
