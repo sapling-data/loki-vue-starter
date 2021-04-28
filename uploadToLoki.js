@@ -2,16 +2,13 @@
 /* eslint-disable no-console, no-loop-func, max-len */
 require('dotenv').config();
 
-const axios = require("axios").default;
-const fs = require("fs");
-const grayMatter = require("gray-matter");
-const path = require("path");
+
+const axios = require('axios').default;
+const fs = require('fs');
 
 /**
  * @typedef {import('./package.json')} PackageJson
  * @typedef {import('./types').PageDataObject} PageDataObject
- * @typedef {import('./types').QueryDataObject} QueryDataObject
- * @typedef {import('./types').ChildQuery} ChildQuery
  *
  * */
 
@@ -35,7 +32,6 @@ const resourceUrl = '/urn/com/loki/core/model/api/resource/v';
 const pageFileListUrl = `/urn/com/loki/core/model/api/list/v/urn/com/${loki.cloudCodeName}/${loki.appCodeName}/app/pages/${loki.pageCodeName}?format=json`;
 const pageFileUploadUrl = `/urn/com/loki/core/model/api/resource/v/urn/com/${loki.cloudCodeName}/${loki.appCodeName}/app/pages/${loki.pageCodeName}!`;
 const pageDataUploadUrl = `/urn/com/loki/modeler/model/types/combinedPageExt/v/urn/com/${loki.cloudPrefix}/${loki.appCodeName}/app/pages/${loki.pageCodeName}`;
-const queryUploadUrl = `/urn/com/loki/modeler/model/types/queryExt/v/urn/com/${loki.cloudPrefix}/${loki.appCodeName}/model/queries/${loki.pageCodeName}`;
 
 const lokiSession = axios.create({
   baseURL: baseUrl,
@@ -47,17 +43,7 @@ const lokiSession = axios.create({
 
 const pushToLoki = async () => {
   const pageDataObject = pageData(loki);
-  const distFiles = fs.readdirSync("./dist");
-  const queryDir = "./src/queries";
-  const queryFiles = fs
-    .readdirSync(queryDir)
-    .filter((p) => p.endsWith(".sql") || p.endsWith(".SQL"));
-  if (queryFiles.length) {
-    const queryData = getQueryData(loki);
-    await lokiSession.post(queryUploadUrl, queryData).then(() => {
-      console.log(`Query "${queryData.name}" uploaded to ${queryData.urn}`);
-    });
-  }
+  const distFiles = fs.readdirSync('./dist');
 
   await lokiSession.post(pageDataUploadUrl, pageDataObject).then(() => {
     console.log(
@@ -104,7 +90,7 @@ async function deleteCurrentFiles(files) {
     // eslint-disable-next-line no-await-in-loop
     await lokiSession
       .delete(deleteUrl)
-      .then(() => {
+      .then((d) => {
         console.log(`\x1b[32m${files[i].urn} was deleted!\x1b[32m`);
       })
       .catch((error) => {
@@ -185,55 +171,4 @@ function pageData(l) {
     ],
   };
 }
-/**
- * @param {PackageJson['appInfo']['loki']} l The appInfo.loki attribute of package.json for the application
- * @returns {QueryDataObject} A data object defining the query to save in AppBuilder
- */
-function getQueryData(l) {
-  const queryUrn = `urn:com:${l.cloudPrefix}:${l.appCodeName}:model:queries:${l.pageCodeName}`;
-  const srcDir = "./src/queries";
-  const childQueries = [];
-
-  fs
-    .readdirSync(srcDir)
-    .filter((p) => p.endsWith(".sql") || p.endsWith(".SQL"))
-    .map((p) => fs.readFileSync(path.resolve(srcDir, p), "utf8"))
-    .forEach((str) => {
-      const hasFrontMatter = grayMatter.test(str);
-      if (!hasFrontMatter) throw Error("You must include a YAML block with a name property and a dataSpaceUrn property");
-      const { data, content: queryString } = grayMatter(str);
-      if (!data.dataSpaceUrn) throw Error("You must specify a dataSpaceUrn");
-      if (!data.name) throw Error('You must give the child query a name');
-      /** @type {ChildQuery} */
-      const queryObject = {
-        urn: `${queryUrn}#${data.name}`,
-        queryString,
-        dataSpaceUrn: data.dataSpaceUrn,
-        queryParams: [],
-      };
-      if (data.queryParams) {
-        const paramNames = Object.keys(data.queryParams);
-        paramNames.forEach((k) => {
-          if (!data.queryParams[k].startsWith("urn:com:loki:core:model:types:")) throw Error("You must specify the loki type for the parameter");
-          queryObject.queryParams.push({ codeName: k, valueTypeUrn: data.queryParams[k] });
-        });
-      }
-      childQueries.push(queryObject);
-    });
-
-  return {
-    urn: queryUrn,
-    name: `${l.pageName} Queries`,
-    queryString: '',
-    summary: `Queries necessary to run page ${l.pageName} at urn:com:${l.cloudPrefix}:${l.appCodeName}:app:pages:${l.pageCodeName}`,
-    securityFunctionUrns: [
-      `urn:com:reedsmith:${l.appCodeName}:model:functions:generalAccess`,
-    ],
-    childQueries,
-    inactive: false,
-    lastEditDate: (new Date()).toISOString(),
-    lastEditByUrn: process.env.LOKI_USER_URN,
-  };
-}
-
 deployApp();

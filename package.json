@@ -4,11 +4,11 @@
   "description": "",
   "appInfo": {
     "loki": {
-      "appCodeName": "delorean",
-      "pageCodeName": "myFancyVueApp",
-      "cloudPrefix": "reedsmith",
-      "cloudCodeName": "reedsmith",
-      "pageName": "My Fancy Vue App"
+      "appCodeName": "The URN segment identifying the Loki app that you plan to deploy to (the last segment of loki.app.rootUrn)",
+      "pageCodeName": "The page in Loki's App Builder that you plan to deploy to",
+      "cloudPrefix": "The subdomain of your cloud's url",
+      "cloudCodeName": "The name of your cloud environment",
+      "pageName": "The name of the page (the page title)"
     }
   },
   "scripts": {
@@ -22,7 +22,6 @@
     "@vitejs/plugin-vue": "^1.1.4",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
-    "gray-matter": "^4.0.2",
     "vite": "^2.0.0",
     "vue": "^3.0.5",
     "vue-router": "^3.5.1",
