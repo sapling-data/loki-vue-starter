@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable no-loop-func */
 require('dotenv').config();
 
 const axios = require('axios').default;
@@ -57,8 +56,7 @@ function getCurrentFiles() {
 async function deleteCurrentFiles(files) {
   console.log(`\x1b[34mDeleting ${files.length} files from the page...\x1b[89m`);
 
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < files.length; i++) {
+  for (let i = 0; i < files.length; i += 1) {
     const deleteUrl = `${resourceUrl}/${files[i].urn.replace(/[:]/g, '/')}`;
     // eslint-disable-next-line no-await-in-loop
     await axios({

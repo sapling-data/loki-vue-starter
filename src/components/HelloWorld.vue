@@ -29,7 +29,7 @@
       border-transparent text-xs font-medium rounded shadow-sm text-white
       bg-green-600 hover:bg-green-700
       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-      @click="increment">count is: {{ count }}</button>
+      @click="incrementCount">count is: {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test hot module replacement.
@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 export default {
   props: {
@@ -52,14 +53,17 @@ export default {
     },
   },
   setup(props) {
-    const count = ref(0);
-    // eslint-disable-next-line no-return-assign
-    const increment = () => (count.value += props.by);
-
+    const store = useStore();
+    const count = computed(() => store.state.count);
+    const incrementCount = () => {
+      store.dispatch('updateCount', {
+        number: props.by,
+      });
+    };
     return {
-      props,
       count,
-      increment,
+      incrementCount,
+      props,
     };
   },
 };
