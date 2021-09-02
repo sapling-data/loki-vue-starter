@@ -17,13 +17,13 @@ to install the necessary packages.
 This starter has already been initialized with the following packages and tools:<br>
 :white_check_mark: Vue 3<br>
 :white_check_mark: Babel<br>
-:white_check_mark: Vue Router (included but not configured)<br>
-:white_check_mark: Vuex (included but not configured)<br>
+:white_check_mark: Vue Router (configured with a basic example router)<br>
+:white_check_mark: Pinia (configured with a basic example store)<br>
 :white_check_mark: Linting on save using ESLint and the Airbnb style guide<br>
 :white_check_mark: Unit testing with Jest<br>
 </p>
 <br>
-⚙️ Because setups for Vue Router and Vuex will vary from project to project, these packages are included but not configured. You will need to determine your own routing and state management needs and configure those tools accordingly.
+⚙️ Because setups for Vue Router and Pinia will vary from project to project, these packages are included but not configured. You will need to determine your own routing and state management needs and configure those tools accordingly.
 
 ### Compiles and hot-reloads for development
 ```
