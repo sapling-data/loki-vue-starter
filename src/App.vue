@@ -14,14 +14,21 @@
   </div>
 </template>
 
-<script setup>
-// eslint-disable-next-line no-unused-vars
+<script>
+import { toRefs } from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 
-// eslint-disable-next-line no-unused-vars
-const tailwindCheck = () => {
-  // eslint-disable-next-line no-alert
-  alert('Yay Tailwind!');
+export default {
+  setup() {
+    const tailwindCheck = () => {
+      // eslint-disable-next-line no-alert
+      alert('Yay Tailwind!');
+    };
+    return {
+      HelloWorld,
+      tailwindCheck,
+    };
+  },
 };
 </script>
 
