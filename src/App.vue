@@ -1,10 +1,17 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-2 mb-20">
-      <img class="my-auto max-h-60 max-w-60" alt="Sapling logo" src="http://saplingdata.com/api/urn/com/loki/core/model/api/modelResource/v/urn/com/saplingdata/website/app/resources/res0/img/sapling-footer-logo.svg?r=33">
-      <img class="my-auto max-h-60 max-w-60" alt="Vue logo" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg">
+    <div class="grid grid-cols-3 mb-20">
+      <img class="mx-auto my-auto max-h-60 max-w-60" alt="Sapling logo"
+      src="./assets/loki-logo.png">
+      <img class="mx-auto my-auto max-h-60 max-w-60" alt="Vue logo" src="./assets/vue-logo.png">
+      <img class="mx-auto my-auto max-h-60 max-w-60" alt="Sapling logo"
+      src="./assets/vite-logo.svg">
     </div>
-    <HelloWorld msg="Welcome to your Loki Vue 3 + Vite Starter!" />
+    <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
 
     <button class="inline-flex items-center px-2.5 py-1.5 mt-3 border
       border-transparent text-xs font-medium rounded shadow-sm text-white
