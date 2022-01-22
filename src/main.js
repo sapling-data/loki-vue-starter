@@ -6,7 +6,7 @@ import { createPinia } from 'pinia';
 import Loki from '@sapling-data/loki-javascript-client/dist/es-bundle';
 import App from './App.vue';
 import router from './router/router';
-import lokiConfig from '../loki.config';
+import lokiConfig from '../loki.config.mjs';
 
 if (import.meta.env.MODE === 'development') {
   lokiConfig.baseUrl = `https://${lokiConfig.cloudPrefix}.saplingdata.com`;
@@ -18,30 +18,31 @@ if (import.meta.env.MODE === 'development') {
   window.loki = new Loki(lokiConfig);
   const rootUrn = `urn:com:${lokiConfig.cloudName}:cloudControl`;
   const keyUrn = null;
+  const cloudUrlBase = `${lokiConfig.baseUrl}/${lokiConfig.internal ? 'sd-cloud' : 'cloud'}`;
   window.loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/api`,
+    url: `${cloudUrlBase}/api`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices'],
     keyUrn,
   });
   window.loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-ui-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/pages`,
+    url: `${cloudUrlBase}/pages`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices-ui', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui'],
     keyUrn,
   });
   window.loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/api`,
+    url: `${cloudUrlBase}/api`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices'],
     keyUrn,
   });
   window.loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-ui-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/pages`,
+    url: `${cloudUrlBase}/pages`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices-ui', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui'],
     keyUrn,
@@ -50,31 +51,31 @@ if (import.meta.env.MODE === 'development') {
   lokiConfig.baseUrl = `https://${lokiConfig.cloudPrefix}.saplingdata.com`;
   const keyUrn = null;
   const rootUrn = `urn:com:${lokiConfig.cloudName}:cloudControl`;
-
+  const cloudUrlBase = `${lokiConfig.baseUrl}/${lokiConfig.internal ? 'sd-cloud' : 'cloud'}`;
   loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/api`,
+    url: `${cloudUrlBase}/api`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices'],
     keyUrn,
   });
   loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-ui-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/pages`,
+    url: `${cloudUrlBase}/pages`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices-ui', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui'],
     keyUrn,
   });
   loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/api`,
+    url: `${cloudUrlBase}/api`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices'],
     keyUrn,
   });
   loki.environ.addConnection({
     urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-ui-dev`,
-    url: `${lokiConfig.baseUrl}/sd-cloud/pages`,
+    url: `${cloudUrlBase}/pages`,
     rootUrn,
     serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices-ui', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui'],
     keyUrn,
