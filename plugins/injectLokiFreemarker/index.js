@@ -11,7 +11,7 @@ const injectLokiFreemarkerPlugin = () => ({
   transformIndexHtml(originalHtml, ctx) {
     const template = fs.readFileSync(path.resolve(__dirname, '../../index.html'), 'utf-8');
     const html = render(template);
-    const pageUrn = `urn:com:${lokiConfig.appRoot}:${lokiConfig.appName}:app:pages:${lokiConfig.pageName}`;
+    const pageUrn = `urn:com:${lokiConfig.appRoot}:${lokiConfig.appModelName}:app:pages:${lokiConfig.pageName}`;
     const lokiFreemarkerExpressions = [
       'urn:com:loki:js:app:pages:lokiJs',
       'urn:com:loki:jquery:app:pages:lokiJQuery',
