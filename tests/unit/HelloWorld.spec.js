@@ -1,14 +1,21 @@
 /* eslint-disable no-undef */
 import { shallowMount } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
 import HelloWorld from '../../src/components/HelloWorld.vue';
+import useStarterStore from '../../src/stores/starter';
 
 describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message';
+  it('renders store.message when passed', async () => {
+    const message = 'new message';
     const wrapper = shallowMount(HelloWorld, {
-      props: { msg },
+      global: {
+        plugins: [createTestingPinia()],
+      },
+      props: { message },
     });
-    expect(wrapper.text()).toMatch(msg);
+    const store = useStarterStore();
+    await store.$patch({ message });
+    expect(wrapper.find('h1#message').text()).toMatch('new message');
   });
 
   test('initial count is zero', () => {
@@ -18,9 +25,14 @@ describe('HelloWorld.vue', () => {
   });
 
   it('increments props.count when button is clicked', async () => {
-    const wrapper = shallowMount(HelloWorld);
+    const wrapper = shallowMount(HelloWorld, {
+      global: {
+        plugins: [createTestingPinia()],
+      },
+    });
+    const store = useStarterStore();
     const button = wrapper.find('button');
     await button.trigger('click');
-    expect(button.text()).toContain(1);
+    expect(button.text()).toContain(store.count);
   });
 });
