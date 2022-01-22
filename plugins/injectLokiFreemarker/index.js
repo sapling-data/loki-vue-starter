@@ -1,16 +1,11 @@
-import path from 'path';
-import fs from 'fs';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { render } from 'ejs';
 // eslint-disable-next-line import/extensions
 import lokiConfig from '../../loki.config.mjs';
 
 const injectLokiFreemarkerPlugin = () => ({
   name: 'inject-loki-freemarker',
+  enforce: 'pre',
   apply: 'build',
-  transformIndexHtml(originalHtml, ctx) {
-    const template = fs.readFileSync(path.resolve(__dirname, '../../index.html'), 'utf-8');
-    const html = render(template);
+  transformIndexHtml(html, ctx) {
     const pageUrn = `urn:com:${lokiConfig.appRoot}:${lokiConfig.appModelName}:app:pages:${lokiConfig.pageName}`;
     const lokiFreemarkerExpressions = [
       'urn:com:loki:js:app:pages:lokiJs',
@@ -24,11 +19,25 @@ const injectLokiFreemarkerPlugin = () => ({
         type: 'text/javascript',
       },
     };
-    const jQueryTag = { ...scriptTag, ...{ attrs: { src: "${loki.web.modelResUrl('urn:opensource:libs:jquery:3.2.1!jquery-3.2.1.min.js')}" } } };
+    const jQueryTag = {
+      ...scriptTag,
+      ...{
+        attrs: {
+          // eslint-disable-next-line no-template-curly-in-string
+          src: "${loki.web.modelResUrl('urn:opensource:libs:jquery:3.2.1!jquery-3.2.1.min.js')}",
+        },
+      },
+    };
     const lokiTags = lokiFreemarkerExpressions.map((expression) => ({
-      ...scriptTag, ...{ attrs: { src: `\${loki.web.pageUrlWithCacheCheck('${expression}')}` } },
+      ...scriptTag,
+      ...{
+        attrs: {
+          src: `\${loki.web.pageUrlWithCacheCheck('${expression}')}`,
+        },
+      },
     }));
-    const bundleTags = Object.values(ctx.bundle).map((item) => ({
+    let bundleTags = Object.values(ctx.bundle).map((item) => ({
+      empty: (item.code === '\n'),
       tag: item.type === 'asset' ? 'link' : 'script',
       injectTo: 'head',
       attrs: {
@@ -54,8 +63,10 @@ const injectLokiFreemarkerPlugin = () => ({
       tag: 'title',
       children: lokiConfig.pageTitle,
     }];
+    // Removes empty chunk rendered  by html entry point to
+    // prevent extraneous tag in production html
+    bundleTags = bundleTags.filter((tag) => !tag.empty);
     return {
-      html,
       tags: [...bundleTags, ...lokiTags, jQueryTag, ...headTags],
     };
   },
