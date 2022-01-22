@@ -85,7 +85,7 @@ The <code>loki</code> command can be directly run from the command line or used 
 #   push:
 #     branches: [ main ]
 ```
-Actions will fail until these lines are uncommented.
+Actions will fail until these lines are uncommented. You will need to add the appropriate secrets to your repository to enable the actions workflow to run successfully. Make sure that your secrets match the names in the worflow YAML file.
 
 Note: GitHub Actions offers a limited number of build minutes per month for free accounts. Please make sure that you are aware of your limit if you haven't used GitHub Actions before.
 ## Contributing
