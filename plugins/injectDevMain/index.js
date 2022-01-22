@@ -1,7 +1,4 @@
-import path from 'path';
-import fs from 'fs';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { render } from 'ejs';
+// eslint-disable-next-line import/extensions
 import lokiConfig from '../../loki.config.mjs';
 
 const injectDevMainPlugin = () => ({
@@ -9,10 +6,7 @@ const injectDevMainPlugin = () => ({
   enforce: 'pre',
   apply: 'serve',
   transformIndexHtml() {
-    const template = fs.readFileSync(path.resolve(__dirname, '../../index.html'), 'utf-8');
-    const html = render(template);
     return {
-      html,
       tags: [{
         tag: 'script',
         injectTo: 'body',
