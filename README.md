@@ -26,18 +26,18 @@ This starter has already been initialized with the following packages and tools:
 ⚙️ Because setups for Vue Router and Pinia will vary from project to project, these packages are included but not configured. You will need to determine your own routing and state management needs and configure those tools accordingly.
 
 ### Compiles and hot-reloads for development
-```
+```node
 npm run dev
 ```
 
 ### Compiles and minifies for production
-```
+```node
 npm run build
 ```
 
 ### Run your unit tests
 An example test is included by default to ensure that Jest is functional/properly installed. You are responsible for writing the rest of the tests for your application.
-```
+```node
 npm run test:unit
 ```
 If you would like to add E2E tests, it is recommended that you add a <code>test:e2e</code> script command that will run with a <code>jest.e2e.config.js</code> file. Since component tests are common in Vue development, the <code>test:unit</code> command is included by default.
@@ -46,11 +46,11 @@ Linting is currently working in VS Code. Your file will be linted and fixed on s
 
 ### Deploying to Loki
 The production build of your application, located in the <code>dist</code> directory by default, can be manually deployed to a page in a Loki OS application by running <code>npm run loki</code> from the command line. In order to properly deploy your code, update the following information in <code>loki.config.mjs</code>:
-```
+```js
 export default {
   // The string that you want to inject into the title tag of your page
   pageTitle: 'Loki Vite Starter',
-  // The Loki app that you plan to deploy to
+  // The Loki app that you plan to deploy to; this may need to change in production depending on your package configuration in Loki.
   appName: process.env.NODE_ENV === 'development' ? 'examples-pg' : 'examples',
   // The app model you are developing for
   appModelName: 'examples',
@@ -64,7 +64,7 @@ export default {
   cloudName: 'saplingdata',
   // The root of your app urn; typically the same as cloudName, but can vary for older apps
   appRoot: 'loki',
-  // Is your app a Sapling internal app or a client app?
+  // Is your app a Sapling internal app or a client app? Non-Sapling projects should be set to false.
   internal: true,
 };
 ```
