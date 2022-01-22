@@ -1,51 +1,42 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-3 mb-20">
-      <img class="mx-auto my-auto max-h-60 max-w-60" alt="Sapling logo"
-      src="./assets/loki-logo.png">
-      <img class="mx-auto my-auto max-h-60 max-w-60" alt="Vue logo" src="./assets/vue-logo.png">
-      <img class="mx-auto my-auto max-h-60 max-w-60" alt="Sapling logo"
-      src="./assets/vite-logo.svg">
-    </div>
-    <router-view v-slot="{ Component }">
+  <div>
+    <TheNavbar />
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-3 mb-20">
+        <img
+            class="mx-auto my-auto max-h-60 max-w-60"
+            alt="Sapling logo"
+            src="https://saplingdata.com/wp-content/uploads/2021/04/powered-sapling-image-2.png">
+        <img
+            class="mx-auto my-auto max-h-60 max-w-60"
+            alt="Vue logo"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/2367px-Vue.js_Logo_2.svg.png">
+        <img
+            class="mx-auto my-auto max-h-60 max-w-60"
+            alt="Vite logo"
+            src="https://vitejs.dev/logo.svg">
+      </div>
+      <router-view v-slot="{ Component }">
         <keep-alive>
           <component :is="Component" />
         </keep-alive>
       </router-view>
-
-    <button class="inline-flex items-center px-2.5 py-1.5 mt-3 border
-      border-transparent text-xs font-medium rounded shadow-sm text-white
-      bg-indigo-600 hover:bg-indigo-700
-      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        @click="tailwindCheck">If this button is purple, you're riding the Tailwind!</button>
+    </div>
   </div>
 </template>
 
 <script>
-import { toRefs } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import TheNavbar from './components/TheNavbar.vue';
 
 export default {
-  setup() {
-    const tailwindCheck = () => {
-      // eslint-disable-next-line no-alert
-      alert('Yay Tailwind!');
-    };
-    return {
-      HelloWorld,
-      tailwindCheck,
-    };
+  components: {
+    TheNavbar,
   },
 };
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
