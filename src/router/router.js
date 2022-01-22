@@ -1,22 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import lokiConfig from '../../loki.config';
 import HelloWorld from '../components/HelloWorld.vue';
-// import packageJson from '../../package.json';
+import TheDocs from '../components/TheDocs.vue';
 
 const routes = [
   {
-    path: '/:pathMatch(.*)',
+    path: '/',
+    name: 'root',
     component: HelloWorld,
+  },
+  {
+    path: '/docs',
+    name: 'docs',
+    component: TheDocs,
   },
 ];
 
-// Uncomment the following lines after setting up your app information in package.json
-// const base = `/${packageJson.appInfo.loki.appName}/pages/urn/com/${packageJson.appInfo.loki.cloudName}/${packageJson.appInfo.loki.appName}/app/pages/${packageJson.appInfo.loki.pageName}/v/`;
-
-const base = '/';
+const base = import.meta.env.MODE === 'development'
+  ? `/${lokiConfig.appName}/pages/urn/com/${lokiConfig.cloudName}/${lokiConfig.appModelName}/app/pages/${lokiConfig.pageName}/v/`
+  : `/${loki.urn.getLastSegment(loki.app.appInstanceUrn)}/pages/urn/com/${lokiConfig.appRoot}/${lokiConfig.appModelName}/app/pages/${lokiConfig.pageName}/v/`;
 
 const router = createRouter({
   history: createWebHistory(base),
-  // history: createWebHistory(base),
   base,
   routes,
 });
