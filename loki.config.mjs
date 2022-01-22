@@ -1,6 +1,6 @@
 export default {
   // The string that you want to inject into the title tag of your page
-  pageTitle: 'Lol Vite Starter',
+  pageTitle: 'Loki Vite Starter',
   // The Loki app that you plan to deploy to
   appName: process.env.NODE_ENV === 'development' ? 'examples-pg' : 'examples',
   // The app model you are developing for
