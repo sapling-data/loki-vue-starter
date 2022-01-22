@@ -5,14 +5,20 @@ import TheDocs from '../components/TheDocs.vue';
 
 const routes = [
   {
-    path: '/',
-    name: 'root',
-    component: HelloWorld,
-  },
-  {
     path: '/docs',
     name: 'docs',
     component: TheDocs,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: {
+      name: 'root',
+    },
+  },
+  {
+    path: '/',
+    name: 'root',
+    component: HelloWorld,
   },
 ];
 
