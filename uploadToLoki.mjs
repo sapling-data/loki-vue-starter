@@ -1,15 +1,14 @@
 /* eslint-disable no-console */
-/* eslint-disable no-loop-func */
-require('dotenv').config();
+// eslint-disable-next-line import/extensions
+import lokiConfig from './loki.config.mjs';
+import 'dotenv/config';
+import axios from 'axios';
+import * as fs from 'fs';
 
-const axios = require('axios').default;
-const fs = require('fs');
-const packageJson = require('./package.json');
-
-const baseUrl = `https://${packageJson.appInfo.loki.cloudPrefix}.saplingdata.com/${packageJson.appInfo.loki.appName}-AppBuilder/api`;
+const baseUrl = `https://${lokiConfig.cloudPrefix}.saplingdata.com/${lokiConfig.appBuilderName}/api`;
 const resourceUrl = `${baseUrl}/urn/com/loki/core/model/api/resource/v`;
-const pageFileListUrl = `${baseUrl}/urn/com/loki/core/model/api/list/v/urn/com/${packageJson.appInfo.loki.cloudName}/${packageJson.appInfo.loki.appName}/app/pages/${packageJson.appInfo.loki.pageName}?format=json`;
-const pageFileUploadUrl = `${baseUrl}/urn/com/loki/core/model/api/resource/v/urn/com/${packageJson.appInfo.loki.cloudName}/${packageJson.appInfo.loki.appName}/app/pages/${packageJson.appInfo.loki.pageName}!`;
+const pageFileListUrl = `${baseUrl}/urn/com/loki/core/model/api/list/v/urn/com/${lokiConfig.appRoot}/${lokiConfig.appModelName}/app/pages/${lokiConfig.pageName}?format=json`;
+const pageFileUploadUrl = `${baseUrl}/urn/com/loki/core/model/api/resource/v/urn/com/${lokiConfig.appRoot}/${lokiConfig.appModelName}/app/pages/${lokiConfig.pageName}!`;
 
 const pushToLoki = async () => {
   const distFiles = fs.readdirSync('./dist');
@@ -81,8 +80,10 @@ async function deleteCurrentFiles(files) {
 
 async function clearFiles() {
   const currentFiles = await getCurrentFiles();
-  await deleteCurrentFiles(currentFiles);
-  console.log('Finished clearing previous build!');
+  if (currentFiles) {
+    await deleteCurrentFiles(currentFiles);
+    console.log('Finished clearing previous build!');
+  }
 }
 
 const deployApp = async () => {
