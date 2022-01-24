@@ -2,6 +2,17 @@
 
 Loki Vue 3 + Vite Starter is a simple way to fast-forward through the setup of a fresh Vue 3 app that can be easily deployed to Sapling Data's Loki cloud OS. This app has been initialized with [Vite](https://vitejs.dev/) and includes basic setups for [Jest](https://jestjs.io/docs/en/getting-started) and [Tailwind CSS](https://tailwindcss.com/docs).
 
+## Quick Start
+Here's how to get code into a Loki cloud ASAP:
+- Create a new page in App Builder with an appropriate security function. Add a blank `index.html` file and set it as the default for the page.
+- Create a new repo using the loki-vite-starter template
+- Clone your new repo and run `npm install`
+- Fill out the information in `loki.config.mjs`
+- Create a `.env` file in your project root with the appropriate credentials for the environment you'll be deploying to. See below for requirements.
+- Run `npm run dev` to make sure your app runs on a dev server.
+- Make any changes you want.
+- Run `npm run loki` to build and deploy your app.
+
 ## Installation
 
 Click the "Use the template" button at the top of the repository's GitHub page to create a new repository using the starter.
@@ -71,7 +82,10 @@ export default {
 Please make sure you update this information correctly, since it will be used to construct the API endpoints for deploying your code. It is recommended to set up a page in Loki's App Builder (along with an appropriate security model) for your Vue app to deploy to **before** configuring your Vue app.
 
 #### Environment variables
-Deploying to Loki requires providing access to valid Loki credentials via environment variables. Add a [.env file to your project root and use dotenv](https://github.com/motdotla/dotenv#readme) to accomplish this. Use <code>LOKI_USERNAME</code> and <code>LOKI_PASSWORD</code> as your variable names.
+Deploying to Loki requires providing access to valid Loki credentials via environment variables. Add a [.env file to your project root and use dotenv](https://github.com/motdotla/dotenv#readme) to accomplish this. Use `LOKI_USERNAME`, `LOKI_PASSWORD`, `VITE_LOKI_USERNAME`, and `VITE_LOKI_PASSWORD` as your variable names.
+<br>
+<br>
+:warning: You will need to supply your credentials twice in your `.env` file, since the same credentials are used to authenticate `loki-javascript-client` inside of Vite as well as the uploadToLoki script outside of Vite.
 <br>
 <br>
 :warning: **DO NOT CHECK YOUR <code>.env</code> FILE INTO VERSION CONTROL** :warning:<br>
