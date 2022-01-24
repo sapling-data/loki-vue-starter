@@ -68,8 +68,8 @@ export default {
     };
 
     const loadMenu = () => {
-      const cloudControlApiConn = loki.environ.getConnection('urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices');
-      const cloudControlUiConn = loki.environ.getConnection('urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui');
+      const cloudControlApiConn = loki.model.getConnectionByServiceGroup('urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices');
+      const cloudControlUiConn = loki.model.getConnectionByServiceGroup('urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui');
       let cloudControlHomePage;
       if (cloudControlUiConn) {
         cloudControlHomePage = cloudControlUiConn.url;
