@@ -9,7 +9,7 @@ Here's how to get code into a Loki cloud ASAP:
 - Clone your new repo and run `npm install`
 - Fill out the information in `loki.config.mjs`
 - Create a `.env` file in your project root with the [appropriate credentials](https://github.com/sapling-data/loki-vite-starter#environment-variables) for the environment you'll be deploying to.
-- If you want to use GitHub Actions to deploy your code automatically, [add your credentials to your Repository Secrets](https://github.com/sapling-data/loki-vite-starter##adding-your-credentials-as-repository-secrets)
+- If you want to use GitHub Actions to deploy your code automatically, [add your credentials to your Repository Secrets](https://github.com/sapling-data/loki-vite-starter#adding-your-credentials-as-repository-secrets)
 - Run `npm run dev` to make sure your app runs on a dev server.
 - Make any changes you want.
 - Run `npm run loki` to build and deploy your app.
