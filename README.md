@@ -101,6 +101,9 @@ The <code>loki</code> command can be directly run from the command line or used 
 ```
 Actions will fail until these lines are uncommented. You will need to add the appropriate secrets to your repository to enable the actions workflow to run successfully. Make sure that your secrets match the names in the worflow YAML file.
 
+##### Adding your credentials as Repository Secrets
+Your GitHub Actions workflow will need access to Loki credentials in order to run. To set this up, you'll need to add your credentials as repository secrets. These settings can be found in your repository settings under Settings > Secrets. Add your credentials under the variables LOKI_USERNAME and LOKI_PASSWORD.
+
 Note: GitHub Actions offers a limited number of build minutes per month for free accounts. Please make sure that you are aware of your limit if you haven't used GitHub Actions before.
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
