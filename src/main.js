@@ -42,20 +42,20 @@ loki.environ.addConnection({
   serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices-ui', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui'],
   keyUrn,
 });
-loki.environ.addConnection({
-  urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-dev`,
-  url: `${cloudUrlBase}/api`,
-  rootUrn,
-  serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices'],
-  keyUrn,
-});
-loki.environ.addConnection({
-  urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-ui-dev`,
-  url: `${cloudUrlBase}/pages`,
-  rootUrn,
-  serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices-ui', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui'],
-  keyUrn,
-});
+// loki.environ.addConnection({
+//   urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-dev`,
+//   url: `${cloudUrlBase}/api`,
+//   rootUrn,
+//   serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices'],
+//   keyUrn,
+// });
+// loki.environ.addConnection({
+//   urn: `urn:com:${lokiConfig.cloudName}:registry:cfg:connections:cloudControl-ui-dev`,
+//   url: `${cloudUrlBase}/pages`,
+//   rootUrn,
+//   serviceGroupUrns: ['urn:com:saplingdata:cloudControl:model:serviceGroups:userServices-ui', 'urn:com:saplingdata:cloudControl:model:serviceGroups:cloudServices-ui'],
+//   keyUrn,
+// });
 
 const app = createApp(App);
 app.use(createPinia());
